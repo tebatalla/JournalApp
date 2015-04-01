@@ -1,1 +1,4 @@
-<%= post.get('title') %><button class='delete delete-post'>Delete</button>
+<a href="#posts/<%= post.id %>">
+  <%= post.escape('title') %>
+</a>
+<button class='delete delete-post'>Delete</button>

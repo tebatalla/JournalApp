@@ -4,17 +4,23 @@ JournalApp.Collections.Posts = Backbone.Collection.extend({
   model: JournalApp.Models.Post,
 
   getOrFetch: function (id) {
-    if (!this.get(id)) {
-      var newPost = new JournalApp.Models.Post({
+    var posts = this;
+    var newPost;
+
+    if (newPost = this.get(id)) {
+      newPost.fetch();
+    } else {
+      newPost = new JournalApp.Models.Post({
         id: id
       });
       newPost.fetch({
-        success: this.add(newPost).bind(this)
+        success: function () {
+          posts.add(newPost);
+        }
       });
-
     }
 
-    this.fetch();
+    return newPost;
   }
 
 });

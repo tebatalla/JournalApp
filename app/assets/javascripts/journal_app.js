@@ -4,7 +4,9 @@ window.JournalApp = {
   Views: {},
   Routers: {},
   initialize: function() {
-    alert('Hello from Backbone!');
+    new JournalApp.Routers.PostsRouter();
+    Backbone.history.start();
+    // alert('Hello from Backbone!');
   }
 };
 
