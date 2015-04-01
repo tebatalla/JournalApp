@@ -4,7 +4,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       render :show
     else
-      render json: @post.errors.full_messages, unprocessable_entity: true
+      render json: @post.errors.full_messages, :status => :unprocessable_entity
     end
   end
 
@@ -19,13 +19,23 @@ class PostsController < ApplicationController
     if @post.destroy
       render :show
     else
-      render json: @post.errors.full_messages, unprocessable_entity: true
+      render json: @post.errors.full_messages, :status => :unprocessable_entity
     end
   end
 
   def show
     @post = Post.find(params[:id])
     render :show
+  end
+
+  def update
+    @post = Post.find(params[:id])
+
+    if @post.update(post_params)
+      render :show
+    else
+      render json: @post.errors.full_messages, :status => :unprocessable_entity
+    end
   end
 
   private
