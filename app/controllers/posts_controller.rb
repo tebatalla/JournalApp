@@ -8,6 +8,21 @@ class PostsController < ApplicationController
     end
   end
 
+  def index
+    @posts = Post.all
+    render :index
+  end
+
+  def destroy
+    @post = Post.find(params[:id])
+
+    if @post.destroy
+      render :show
+    else
+      render json: @post.errors.full_messages, unprocessable_entity: true
+    end
+  end
+
   private
 
   def post_params
