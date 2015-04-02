@@ -8,12 +8,12 @@ JournalApp.Views.PostsIndex = Backbone.View.extend({
     this.collection.each( function (post) {
       var postItem = new JournalApp.Views.PostsIndexItem({ model: post });
       this.$('.posts-list').append(postItem.render().$el);
-    }.bind(this))
+    }.bind(this));
     return this;
   },
 
   initialize: function () {
-    this.listenTo(this.collection, "sync remove", this.render)
+    this.listenTo(this.collection, "sync remove add change", this.render);
   }
 
 });

@@ -6,44 +6,44 @@ JournalApp.Routers.PostsRouter = Backbone.Router.extend({
     "posts/:id/edit": "editPost"
   },
 
+  initialize: function($container, collection) {
+    this.$container = $container;
+    this.postsCollection = collection;
+  },
+
   insertPostsIndex: function () {
-    this._postsCollection = new JournalApp.Collections.Posts();
-    var postsIndexView = new JournalApp.Views.PostsIndex({ collection: this._postsCollection });
-    this._postsCollection.fetch();
-    $(".container").html(postsIndexView.render().$el);
+    var postsIndexView = new JournalApp.Views.PostsIndex({
+      collection: this.postsCollection
+    });
+    this.postsCollection.fetch();
+    this.$container.html(postsIndexView.render().$el);
   },
 
   displayPost: function (id) {
-    if (!this._postsCollection) {
-      this._postsCollection = new JournalApp.Collections.Posts();
-    }
-    var post = this._postsCollection.getOrFetch(id);
-    var postShowView = new JournalApp.Views.PostShow({ model: post });
-    $('.container').html(postShowView.render().$el);
+    var post = this.postsCollection.getOrFetch(id);
+    var postShowView = new JournalApp.Views.PostShow({
+      model: post,
+      collection: this.postsCollection
+    });
+    this.$container.html(postShowView.render().$el);
   },
 
   editPost: function (id) {
-    if (!this._postsCollection) {
-      this._postsCollection = new JournalApp.Collections.Posts();
-    }
-    var post = this._postsCollection.getOrFetch(id);
+    var post = this.postsCollection.getOrFetch(id);
     var editPostView = new JournalApp.Views.PostForm({
       model: post,
-      collection: this._postsCollection
+      collection: this.postsCollection
     });
-    $('.container').html(editPostView.render().$el);
+    this.$container.html(editPostView.render().$el);
   },
 
   newPost: function () {
-    if (!this._postsCollection) {
-      this._postsCollection = new JournalApp.Collections.Posts();
-    }
     var post = new JournalApp.Models.Post();
     var newPostView = new JournalApp.Views.PostForm({
       model: post,
-      collection: this._postsCollection
+      collection: this.postsCollection
     });
-    $('.container').html(newPostView.render().$el);
+    this.$container.html(newPostView.render().$el);
   }
 
 });

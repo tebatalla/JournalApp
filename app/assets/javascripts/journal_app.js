@@ -3,13 +3,21 @@ window.JournalApp = {
   Collections: {},
   Views: {},
   Routers: {},
-  initialize: function() {
-    new JournalApp.Routers.PostsRouter();
+  initialize: function(sidebar, $content) {
+    var postsCollection = new JournalApp.Collections.Posts();
+    postsCollection.fetch();
+    var postsIndexSidebar = new JournalApp.Views.PostsIndex({
+      collection: postsCollection
+    });
+    sidebar.html(postsIndexSidebar.render().$el);
+    new JournalApp.Routers.PostsRouter($content, postsCollection);
     Backbone.history.start();
-    // alert('Hello from Backbone!');
+
   }
 };
 
 $(document).ready(function(){
-  JournalApp.initialize();
+  var $sidebar = $('.sidebar');
+  var $content = $('.content');
+  JournalApp.initialize($sidebar, $content);
 });

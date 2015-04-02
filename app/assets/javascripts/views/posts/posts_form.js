@@ -23,14 +23,14 @@ JournalApp.Views.PostForm = Backbone.View.extend({
     var data = $(event.currentTarget).serializeJSON()['posts'];
     this.model.save(data, {
       success: function () {
-        this.collection.add(this.model, { merge: true })
-        Backbone.history.navigate('', { trigger: true })
+        this.collection.add(this.model, { merge: true });
+        Backbone.history.navigate('', { trigger: true });
       }.bind(this),
 
       error: function (model, errors) {
-        this.errors = errors.responseJSON
+        this.errors = errors.responseJSON;
         this.render();
       }.bind(this)
-    })
+    });
   }
 });
